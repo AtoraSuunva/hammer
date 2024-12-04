@@ -7,6 +7,7 @@ import { raw_user } from './raw_user'
 export const commands: Command<CtxWithEnv, Request, Toucan>[] = [
   raw_message,
   raw_user,
+  raw_message,
 ]
 
 export const components: Component<CtxWithEnv, Request, Toucan>[] = []

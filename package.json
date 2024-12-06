@@ -30,7 +30,7 @@
     "@discordjs/core": "^2.0.0",
     "@discordjs/rest": "^2.4.0",
     "discord-api-types": "^0.37.110",
-    "toucan-js": "^4.0.0",
+    "toucan-js": "^3.4.0",
     "workers-discord": "^0.0.12"
   }
 }

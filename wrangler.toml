@@ -13,5 +13,8 @@ watch_dir = "src"
 [observability]
 enabled = true
 
+[observability.logs]
+enabled = true
+
 [env.production]
 name = 'hammer'

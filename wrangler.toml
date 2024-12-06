@@ -11,4 +11,5 @@ command = "pnpm run build"
 watch_dir = "src"
 
 [env.production]
+name = 'hammer'
 route = 'hammer.atora.workers.dev'

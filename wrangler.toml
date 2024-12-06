@@ -10,5 +10,8 @@ compatibility_flags = ["nodejs_compat"]
 command = "pnpm run build"
 watch_dir = "src"
 
+[observability]
+enabled = true
+
 [env.production]
 name = 'hammer'

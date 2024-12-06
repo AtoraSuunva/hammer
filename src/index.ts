@@ -37,7 +37,7 @@ const worker: ExportedHandler<Env> = {
     api ??= new API(rest)
 
     const reqClone = request.clone()
-    console.log(reqClone.method, reqClone.url)
+    console.log({ method: reqClone.method, url: reqClone.url })
     try {
       console.log(await reqClone.json())
     } catch (err) {

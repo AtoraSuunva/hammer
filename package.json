@@ -17,20 +17,30 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@cloudflare/workers-types": "^4.20241205.0",
-    "@sentry/esbuild-plugin": "^2.22.7",
+    "@cloudflare/workers-types": "^4.20250204.0",
+    "@sentry/esbuild-plugin": "^3.1.2",
     "dotenv": "^16.4.7",
     "ngrok": "5.0.0-beta.2",
     "npm-run-all": "^4.1.5",
-    "tsup": "^8.3.5",
-    "typescript": "^5.7.2",
-    "wrangler": "^3.92.0"
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "wrangler": "^3.109.0"
   },
   "dependencies": {
-    "@discordjs/core": "^2.0.0",
-    "@discordjs/rest": "^2.4.0",
-    "discord-api-types": "^0.37.110",
+    "@discordjs/core": "^2.0.1",
+    "@discordjs/rest": "^2.4.3",
+    "discord-api-types": "^0.37.119",
     "toucan-js": "^3.4.0",
     "workers-discord": "^0.0.12"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "@sentry/cli",
+      "esbuild",
+      "ngrok",
+      "sharp",
+      "workerd"
+    ]
   }
 }

@@ -18,3 +18,7 @@ enabled = true
 
 [env.production]
 name = 'hammer'
+
+[assets]
+directory = './public'
+binding = 'ASSETS'

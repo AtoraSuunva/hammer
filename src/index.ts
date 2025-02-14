@@ -24,6 +24,10 @@ const worker: ExportedHandler<Env> = {
       })
     }
 
+    if (!env.DISCORD_PUBLIC_KEY || !env.DISCORD_BOT_TOKEN) {
+      throw new Error('Missing DISCORD_PUBLIC_KEY or DISCORD_BOT_TOKEN')
+    }
+
     // Create the handler if it doesn't exist yet
     handler ??= createHandler<CtxWithEnv, Request, Toucan>(
       commands,
@@ -37,7 +41,6 @@ const worker: ExportedHandler<Env> = {
     api ??= new API(rest)
 
     const reqClone = request.clone()
-    console.log({ method: reqClone.method, url: reqClone.url })
     try {
       console.log(await reqClone.json())
     } catch (err) {

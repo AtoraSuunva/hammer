@@ -11,7 +11,7 @@ import type { API } from '@discordjs/core/http-only'
 import { ApplicationCommandType } from 'discord-api-types/v10'
 import type { Toucan } from 'toucan-js'
 import type { CtxWithEnv } from '../env.js'
-import { bufferfy } from '../utils/bufferfy.js'
+import { editInJSONResponse } from '../utils/editInJSONResponse.js'
 
 export const raw_message: Command<CtxWithEnv, Request, Toucan> = {
   name: 'Raw',
@@ -27,8 +27,8 @@ export const raw_message: Command<CtxWithEnv, Request, Toucan> = {
       InteractionContextType.PrivateChannel,
     ],
   },
-  execute: async ({ response, wait, interaction, context }) => {
-    wait(editInAttachment(context.api, interaction))
+  execute: async ({ request, response, wait, interaction, context }) => {
+    wait(editInAttachment(request, context.api, interaction))
 
     return response({
       type: InteractionResponseType.DeferredChannelMessageWithSource,
@@ -40,22 +40,11 @@ export const raw_message: Command<CtxWithEnv, Request, Toucan> = {
 }
 
 async function editInAttachment(
+  request: Request,
   api: API,
   interaction: APIMessageApplicationCommandInteraction,
 ) {
   const message = interaction.data.resolved.messages[interaction.data.target_id]
 
-  return api.interactions.editReply(
-    interaction.application_id,
-    interaction.token,
-    {
-      files: [
-        {
-          name: 'raw_message.json',
-          data: bufferfy(message),
-          contentType: 'application/json',
-        },
-      ],
-    },
-  )
+  return editInJSONResponse(request, api, interaction, 'raw_message.json', message)
 }

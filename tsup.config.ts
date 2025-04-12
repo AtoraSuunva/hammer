@@ -31,14 +31,26 @@ export default defineConfig({
   onSuccess: async () => {
     if (process.env['NODE_ENV'] !== 'production') return
 
+    if (!process.env['DISCORD_CLIENT_ID']) {
+      console.error('DISCORD_CLIENT_ID is not set')
+      return
+    }
+
+    if (!process.env['DISCORD_CLIENT_SECRET']) {
+      console.error('DISCORD_CLIENT_SECRET is not set')
+      return
+    }
+
+    console.log('Registering commands...')
+
     await registerCommands(
-      // biome-ignore lint/style/noNonNullAssertion: the error if you forget is your problem
-      process.env['DISCORD_CLIENT_ID']!,
-      // biome-ignore lint/style/noNonNullAssertion: the error if you forget is your problem
-      process.env['DISCORD_CLIENT_SECRET']!,
+      process.env['DISCORD_CLIENT_ID'],
+      process.env['DISCORD_CLIENT_SECRET'],
       commands,
       true,
       process.env['DISCORD_GUILD_ID'],
     )
+
+    console.log('Commands registered!')
   },
 })

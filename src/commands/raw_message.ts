@@ -46,5 +46,11 @@ async function editInAttachment(
 ) {
   const message = interaction.data.resolved.messages[interaction.data.target_id]
 
-  return editInJSONResponse(request, api, interaction, 'raw_message.json', message)
+  return editInJSONResponse(
+    request,
+    api,
+    interaction,
+    'raw_message.json',
+    message,
+  )
 }

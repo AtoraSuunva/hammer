@@ -29,6 +29,8 @@ export default defineConfig({
   esbuildPlugins: sentry ? [sentry] : [],
   outExtension: () => ({ js: '.js' }),
   onSuccess: async () => {
+    if (process.env['NODE_ENV'] !== 'production') return
+
     await registerCommands(
       // biome-ignore lint/style/noNonNullAssertion: the error if you forget is your problem
       process.env['DISCORD_CLIENT_ID']!,

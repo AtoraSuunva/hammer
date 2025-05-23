@@ -15,9 +15,9 @@ import type { Toucan } from 'toucan-js'
 import type { CtxWithEnv } from '../env.js'
 import { editInJSONResponse } from '../utils/editInJSONResponse.js'
 
-export const raw_channel: Command<CtxWithEnv, Request, Toucan> = {
-  name: 'raw_channel',
-  description: 'Get raw data about the channel this command was run in',
+export const raw_interaction: Command<CtxWithEnv, Request, Toucan> = {
+  name: 'raw_interaction',
+  description: 'Get raw data about the interaction this was run with',
   type: ApplicationCommandType.ChatInput,
   contexts: {
     installation: [
@@ -51,7 +51,7 @@ async function editInAttachment(
     request,
     api,
     interaction,
-    'raw_channel.json',
-    interaction.channel,
+    'raw_interaction.json',
+    interaction,
   )
 }

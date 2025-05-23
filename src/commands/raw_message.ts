@@ -4,7 +4,7 @@ import {
   InteractionContextType,
   InteractionResponseType,
   MessageFlags,
-} from 'discord-api-types/payloads'
+} from 'discord-api-types/v10'
 import type { Command } from 'workers-discord'
 
 import type { API } from '@discordjs/core/http-only'
@@ -14,7 +14,7 @@ import type { CtxWithEnv } from '../env.js'
 import { editInJSONResponse } from '../utils/editInJSONResponse.js'
 
 export const raw_message: Command<CtxWithEnv, Request, Toucan> = {
-  name: 'Raw',
+  name: 'Raw Message',
   type: ApplicationCommandType.Message,
   contexts: {
     installation: [

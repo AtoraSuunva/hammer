@@ -1,4 +1,9 @@
-import type { API, APIInteraction } from '@discordjs/core/http-only'
+import {
+  type API,
+  type APIInteraction,
+  ButtonStyle,
+  ComponentType,
+} from '@discordjs/core/http-only'
 import { bufferfy } from './bufferfy'
 
 export function editInJSONResponse(
@@ -7,16 +12,23 @@ export function editInJSONResponse(
   interaction: APIInteraction,
   fileName: string,
   fileContent: unknown,
+  repostButton = true,
 ) {
   const origin = new URL(request.url).origin
+  const copiedContent = structuredClone(fileContent)
+
+  // @ts-expect-error
+  if ('token' in copiedContent) {
+    copiedContent.token = '{token}'
+  }
 
   return api.interactions
     .editReply(interaction.application_id, interaction.token, {
-      content: `<[Online Viewer](${origin}/json?url=)>`,
+      content: `<[Online Viewer](${origin}/json?url=)> \`${fileName}\``,
       files: [
         {
           name: fileName,
-          data: bufferfy(fileContent),
+          data: bufferfy(copiedContent),
           contentType: 'application/json',
         },
       ],
@@ -35,7 +47,22 @@ export function editInJSONResponse(
         interaction.application_id,
         interaction.token,
         {
-          content: `[Online Viewer](<${origin}/json?url=${encodeURIComponent(fileUrl)}>)`,
+          content: `[Online Viewer](<${origin}/json?url=${encodeURIComponent(fileUrl)}>) \`${fileName}\``,
+          components: repostButton
+            ? [
+                {
+                  type: ComponentType.ActionRow,
+                  components: [
+                    {
+                      type: ComponentType.Button,
+                      custom_id: 'repost',
+                      label: 'Repost',
+                      style: ButtonStyle.Secondary,
+                    },
+                  ],
+                },
+              ]
+            : [],
         },
       )
     })

@@ -34,12 +34,14 @@ async function editInAttachment(
 
   const data = await fetch(attachment.url).then((res) => res.json())
 
-  return editInJSONResponse(
+  return editInJSONResponse({
     request,
     api,
     interaction,
-    attachment.filename,
-    data,
-    false,
-  )
+    fileName: attachment.filename,
+    fileContent: data,
+    repostButton: false,
+    // CORS strikes again, we would need a proxy to have an online viewer for non-ephemeral files
+    onlineViewer: false,
+  })
 }

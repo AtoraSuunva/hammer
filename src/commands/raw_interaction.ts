@@ -47,11 +47,11 @@ async function editInAttachment(
   api: API,
   interaction: APIChatInputApplicationCommandInteraction,
 ) {
-  return editInJSONResponse(
+  return editInJSONResponse({
     request,
     api,
     interaction,
-    'raw_interaction.json',
-    interaction,
-  )
+    fileName: 'raw_interaction.json',
+    fileContent: interaction,
+  })
 }

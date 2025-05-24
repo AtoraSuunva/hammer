@@ -6,14 +6,25 @@ import {
 } from '@discordjs/core/http-only'
 import { bufferfy } from './bufferfy'
 
-export function editInJSONResponse(
-  request: Request,
-  api: API,
-  interaction: APIInteraction,
-  fileName: string,
-  fileContent: unknown,
+interface EditInJSONResponseParams {
+  request: Request
+  api: API
+  interaction: APIInteraction
+  fileName: string
+  fileContent: unknown
+  repostButton?: boolean
+  onlineViewer?: boolean
+}
+
+export function editInJSONResponse({
+  request,
+  api,
+  interaction,
+  fileName,
+  fileContent,
   repostButton = true,
-) {
+  onlineViewer = true,
+}: EditInJSONResponseParams) {
   const origin = new URL(request.url).origin
   const copiedContent = structuredClone(fileContent)
 
@@ -24,7 +35,9 @@ export function editInJSONResponse(
 
   return api.interactions
     .editReply(interaction.application_id, interaction.token, {
-      content: `<[Online Viewer](${origin}/json?url=)> \`${fileName}\``,
+      content: onlineViewer
+        ? `<[Online Viewer](${origin}/json?url=)> \`${fileName}\``
+        : `\`${fileName}\``,
       files: [
         {
           name: fileName,
@@ -47,7 +60,9 @@ export function editInJSONResponse(
         interaction.application_id,
         interaction.token,
         {
-          content: `[Online Viewer](<${origin}/json?url=${encodeURIComponent(fileUrl)}>) \`${fileName}\``,
+          content: onlineViewer
+            ? `[Online Viewer](<${origin}/json?url=${encodeURIComponent(fileUrl)}>) \`${fileName}\``
+            : `\`${fileName}\``,
           components: repostButton
             ? [
                 {
